@@ -1,8 +1,5 @@
 package Lesson_2;
 
-import com.sun.org.apache.bcel.internal.generic.NEWARRAY;
-import jdk.nashorn.internal.runtime.NumberToString;
-
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -10,63 +7,101 @@ import java.io.IOException;
 public class MainEx {
     public static void main(String[] args) {
 
-        String [][] stringArray1 = new String [4][4];   //неинициализованный массив
-        String [][] stringArray2= {{"1","2","3","4"}, {"2","6","7","8"}, {"9","0","1","2"}, {"3","4","5","6"}}; //корректный массив
-        String [][] stringArray3 ={{"1","2","а","4"}, {" ","6","7","8"}, {"9","","1","2"}, {"3","4","5","6"}};  // массив со значениями вызывающими исключение
+        int a, b;
 
-        System.out.println("_______________________________________");
-        challenge(stringArray1);    // ошибка инциализации
-        System.out.println("_______________________________________");
-        challenge(stringArray2);    // корректная работа
-        System.out.println("_______________________________________");
-        challenge(stringArray3);    // ошибка преобразования в число
-        System.out.println("_______________________________________");
+//        a = 0;
+//        b = 10 / a;
+
+//        try {
+//            int[] mass = {1,2,3};
+//
+//            a = 0;
+//            b = 10 / a;
+//
+//            mass[40] = 10;
+//
+//        } catch (ArithmeticException e) {
+//           // e.printStackTrace();
+//            System.out.println("Деление на 0");
+//        } catch (ArrayIndexOutOfBoundsException e) {
+//           // e.printStackTrace();
+//            System.out.println("Вышли за границу массива");
+//        }
+
+        //System.out.println("End!");
+
+
+//        try {
+//            FileInputStream fileInputStream = new FileInputStream("1.txt");
+//        } catch (FileNotFoundException e) {
+//            e.printStackTrace();
+//        }
+
+//        throw new ArithmeticException("ошибка!");
+
+
+//       try {
+//           System.out.println(sqrt(10));
+//        } catch (ArithmeticException e) {
+//           System.out.println("что нужно делать");
+//            e.printStackTrace();
+//        }
+
+// сервер с расчетами
+//        try {
+//            someThing();
+//        } catch (FileNotFoundException e) {
+//            e.printStackTrace();
+//        }
+
+//        System.out.println(a());
+
+//        try (FileInputStream fileInputStream = new FileInputStream("1.txt")) {
+//
+//        } catch (FileNotFoundException e) {
+//            e.printStackTrace();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+
+
     }
 
-    public static void challenge(String[][] myarray) {
-        try { checksize(myarray);
-            arraySum(myarray);
+//    public static int a() {
+//        try {
+//            return -1;
+//        } catch (ArrayIndexOutOfBoundsException e) {
+//
+//        } catch (ArithmeticException e) {
+//
+//        } finally {
+//
+//        }
+//    }
+
+
+        public static void someThing () throws FileNotFoundException {
+            // клиент отправляет данные
+            FileInputStream fileInputStream = new FileInputStream("1.txt");
         }
 
-        catch (MyArraySizeException e) {
-            e.printStackTrace();
-            System.out.println("Исправьте размерность массива!");
-        }
-        catch (MyArrayDataException e) {
-            e.printStackTrace();
-            System.out.println("Исправьте ошибку!");
-        }
-    }
-
-    public static void checksize(String[][] myarray) throws  MyArraySizeException{
-        int rows = myarray.length;
-        int columns = myarray[0].length;
-
-        if (rows != 4 || columns != 4) {
-            throw new  MyArraySizeException("Наш массив должен иметь размер 4x4. Текущий размер массива " + rows + "x" + columns );
-        }
-    }
-
-    public static void arraySum(String [][] inArray) throws MyArrayDataException{
-        int sum = 0;
-        String message = "";
-            for (int i=0; i < inArray.length; i++){
-                for (int j=0; j < inArray[i].length; j++) {
-                    try {
-                        sum += Integer.parseInt(inArray[i][j]);
-                    } catch (NumberFormatException e){
-                        if (inArray[i][j] == null) {
-                           message = "Массив не определён. Нужно инициализировать массив";
-                        }
-                        else {
-                            message = "В элементе [" + i + "][" + j + "] + содержится значение " + inArray[i][j] + ", не являющееся числом.";
-                        }
-                        throw new MyArrayDataException(message);
-                    }
-                }
+        public static int sqrt ( int n){
+            if (n > 0) {
+                return n / 2;
             }
-            System.out.println("Вычисления выполнены корректно. Сумма массива = " + sum);
+
+            throw new ArithmeticException("нельзя отрицательное");
         }
 
-    }
+//    public static void a() {
+//        b();
+//    }
 
+        public static void b () {
+            c();
+        }
+
+        public static void c () {
+            int b = 10 / 0;
+        }
+    }
