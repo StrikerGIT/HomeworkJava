@@ -1,79 +1,79 @@
-package DZ;
+package ru.geekbrains.chat.DZ_2_1;
 
-import java.util.ArrayList;
-import java.util.Arrays;
+import java.sql.*;
 
 public class Main {
+    private static Connection connection;
+    private static Statement stmt;
+
     public static void main(String[] args) {
-        Box<Fruit> boxf = new Box<>();
-        Box<Apple> boxa = new Box<>();
-        Box<Orange> boxo = new Box<>();
-        boxa.addFruit(new Apple(), new Apple(), new Apple());
-        boxo.addFruit(new Orange(),new Orange());
-        boxa.transfer(boxf);
-        if (boxf.compare(boxo)) {
-            System.out.println("Ящики совпадают");
+        try {
+        connect();
+        createTable();
+        insertStudents("Борис","Группа 1", 28);
+        insertStudents("Иван","Группа 1", 36);
+        updateScore("Борис","Группа 1", 42);
+        getInfoStudents();
+        deleteTable();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            disconnect();
+         }
+
+    }
+
+    public static void connect() throws ClassNotFoundException, SQLException {
+
+            Class.forName("org.sqlite.JDBC");
+            connection = DriverManager.getConnection("jdbc:sqlite:users.db");
+            stmt = connection.createStatement();
+    }
+
+    public static void createTable() throws SQLException {
+            String query = "CREATE TABLE IF NOT EXISTS Students\n" +
+                    "(\n" +
+                    "  StudID INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,\n" +
+                    "  Name TEXT NOT NULL,\n" +
+                    "  GroupName TEXT NOT NULL,\n" +
+                    "  Score INTEGER NOT NULL\n" +
+                    ");";
+            connection.prepareStatement(query).executeUpdate();
+    }
+
+    public static void deleteTable() throws SQLException {
+            String query = "DROP TABLE Students;";
+            connection.prepareStatement(query).executeUpdate();
+    }
+
+    public static void getInfoStudents() throws SQLException {
+            ResultSet rs = stmt.executeQuery("SELECT * FROM Students");
+            while (rs.next()) {
+                System.out.println("Студент: " + rs.getString(2) + "; группа " + rs.getString(3) + "; результат " + rs.getInt(4));
+            }
+    }
+
+    public static void insertStudents(String name, String groupName, Integer score) throws SQLException {
+            String query = "INSERT INTO Students (Name, GroupName, Score) VALUES (?, ?, ?);";
+            PreparedStatement ps = connection.prepareStatement(query);
+            ps.setString(1, name);
+            ps.setString(2, groupName);
+            ps.setInt(3, score);
+            ps.executeUpdate();
+    }
+
+    public static void updateScore(String name, String groupName, Integer score) throws SQLException {
+            String query = "UPDATE  Students SET  Score = '" + score + "' WHERE Name = '" + name + "' AND GroupName = '" + groupName + "';";
+           connection.prepareStatement(query).executeUpdate();
+    }
+
+    public static void disconnect()  {
+        try {
+            connection.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
-
-    }
-
-}
-
-class Box<T extends Fruit> {
-    private ArrayList<T> list;
-
-    public Box(T... arr) {
-        list = new ArrayList<T>(Arrays.asList(arr));
-    }
-
-    public float weight() {
-        if (list.size() == 0) return 0.0f;
-        return list.get(0).weight() * list.size();
-    }
-
-    public void addFruit(T fruit) {
-        list.add(fruit);
-    }
-
-    public void addFruit(T... fruit) {
-        for (int i = 0; i <fruit.length; i++) {
-            list.add(fruit[i]);
-        }
-    }
-
-    public boolean compare(Box another) {
-        return Math.abs(this.weight() - another.weight()) < 0.00001;
-    }
-
-    public void transfer(Box<? super T> another) {
-        another.list.clear();
-        another.list.addAll(this.list);
-        this.list.clear();
     }
 }
 
-abstract class Fruit {
-    protected float weight;
 
-    public float weight() {
-        return weight;
-    }
-
-    public Fruit(float weight) {
-        this.weight = weight;
-    }
-}
-
-class Orange extends Fruit {
-    public Orange() {
-        super(1.5f);
-    }
-
-}
-
-class Apple extends Fruit {
-    public Apple() {
-        super(1.0f);
-    }
-
-}
