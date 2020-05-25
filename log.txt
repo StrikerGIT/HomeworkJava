@@ -1,6 +1,0 @@
-16:16:17,436 INFO  [org.jboss.as.repository] (management-handler-thread - 1) WFLYDR0001: Content added at location C:\wildfly-19.1.0.Final\standalone\data\content\ed\718e08b3834d4ed1530489b608e4ff6963c8c0\content
-16:16:17,446 INFO  [org.jboss.as.server.deployment] (MSC service thread 1-6) WFLYSRV0027: Starting deployment of "first-lesson.war" (runtime-name: "first-lesson.war")
-16:16:18,473 INFO  [org.infinispan.factories.GlobalComponentRegistry] (MSC service thread 1-1) ISPN000128: Infinispan version: Infinispan 'Infinity Minus ONE +2' 9.4.18.Final
-16:16:18,722 INFO  [org.jboss.as.clustering.infinispan] (ServerService Thread Pool -- 78) WFLYCLINF0002: Started client-mappings cache from ejb container
-16:16:18,794 INFO  [org.wildfly.extension.undertow] (ServerService Thread Pool -- 81) WFLYUT0021: Registered web context: '/first-lesson' for server 'default-server'
-16:16:18,833 INFO  [org.jboss.as.server] (management-handler-thread - 1) WFLYSRV0010: Deployed "first-lesson.war" (runtime-name : "first-lesson.war")
