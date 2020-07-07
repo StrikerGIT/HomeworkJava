@@ -1,0 +1,16 @@
+GET http://localhost:8080/e-shop/api/product/all
+
+###
+
+POST http://localhost:8080/e-shop/api/product/new
+Content-Type: application/json
+
+{
+  "id": 20,
+  "title": "Product20",
+  "coast": "2232",
+  "categoryId": 1,
+  "categoryName": "Computers"
+}
+
+###
